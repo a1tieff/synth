@@ -1,14 +1,18 @@
 body {
-  background-color: #fff;
-  color: #333;
-  margin: 33px;
-  font-family: verdana, arial, helvetica, sans-serif;
+  background-color: white;
+  //color: #e0e0e0;
+  color: black;
+  margin: 40px 120px 0px 120px;
+  font-family: 'helvetica neue', helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
 
-p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+p,
+ol,
+ul,
+td {
+  font-family: 'helvetica neue', helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
@@ -41,7 +45,8 @@ td {
 }
 
 div {
-  &.field, &.actions {
+  &.field,
+  &.actions {
     margin-bottom: 10px;
   }
 }

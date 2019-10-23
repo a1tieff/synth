@@ -4,6 +4,7 @@ import PlaySwitch from '../PlaySwitch'
 import ToggleSwitch from '../ToggleSwitch'
 import Slider from '../Slider'
 import Knob from '../Knob'
+import ButtonSet from '../ButtonSet'
 
 export default class Tremolo extends React.Component {
   constructor(props) {
@@ -11,6 +12,8 @@ export default class Tremolo extends React.Component {
   }
 
   render() {
+    const set = ['sine', 'square', 'triangle', 'sawtooth']
+
     let name = 'tremolo'
     const {
       effect,
@@ -18,28 +21,42 @@ export default class Tremolo extends React.Component {
       on,
       toggleEffect,
       changeEffectWetValue,
-      changeTremoloValue
+      changeTremoloValue,
+      changeEffectValue
     } = this.props
 
     return (
       <div className="Effect">
-        <h1 className="headerEffect">Tremolo</h1>
-        <div className="paramEffect">Wet</div>
-        <Slider
-          name={name}
-          min="0"
-          max="1"
-          value={wet}
-          handleValueChange={changeEffectWetValue}
-        />
-        <div className="paramEffect">Spread</div>
-        <Slider
-          name={name}
-          min="0"
-          max="50"
-          value={effect.spread}
-          handleValueChange={changeTremoloValue}
-        />
+        <div className="paramEffect">
+          <div className="paramName">Wet</div>
+          <Slider
+            name={name}
+            min="0"
+            max="1"
+            value={wet}
+            handleValueChange={changeEffectWetValue}
+          />
+        </div>
+        <div className="paramEffect">
+          <div className="paramName">Spread</div>
+          <Slider
+            name={name}
+            min="0"
+            max="50"
+            value={effect.spread}
+            handleValueChange={changeTremoloValue}
+          />
+        </div>
+        <div className="paramEffect">
+          <div className="paramName">Type</div>
+          <ButtonSet
+            name={name}
+            property="type"
+            set={set}
+            value={effect.type}
+            handleValueChange={changeEffectValue}
+          />
+        </div>
         <ToggleSwitch value="Tremolo" current={on} handleClick={toggleEffect} />
       </div>
     )

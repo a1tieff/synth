@@ -5,8 +5,10 @@ import PropTypes from 'prop-types'
 import Synth from '../containers/Synth'
 
 document.addEventListener('DOMContentLoaded', () => {
+  const data = JSON.parse(document.getElementById('data').dataset.props)
+
   ReactDOM.render(
-    <Synth />,
+    <Synth {...data} />,
     document.body.appendChild(document.createElement('div'))
   )
 })

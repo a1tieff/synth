@@ -1,9 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<%
+  props = {
+    wet: 0,
+    distortion: 0,
+    oversample: 'none'
+  }
+%>
+
+<div id="data" data-props="<%= props.to_json %>"></div>
 
 <table>
   <thead>
-  
+
   </thead>
 
   <tbody>

@@ -1,175 +1,73 @@
 import _ from 'lodash'
+import $ from 'jquery'
 import React from 'react'
 import Tone from 'tone'
 
+import * as effects from '../tunes/effects'
+//import * as parts from '../tunes/parts'
+//import * as synths from '../tunes/synths'
+
 import PlaySwitch from '../components/PlaySwitch'
 import ToggleSwitch from '../components/ToggleSwitch'
-import Slider from '../components/Slider'
-import Knob from '../components/Knob'
+import ToggleLoop from '../components/ToggleLoop'
 
 import Distortion from '../components/effects/Distortion'
 import FeedbackDelay from '../components/effects/FeedbackDelay'
 import Chorus from '../components/effects/Chorus'
 import Tremolo from '../components/effects/Tremolo'
 import Reverb from '../components/effects/Reverb'
-//import Phaser from '../components/effects/Phaser'
-//import AutoWah from '../components/effects/AutoWah'
+import Phaser from '../components/effects/Phaser'
+import AutoWah from '../components/effects/AutoWah'
+import BitCrusher from '../components/effects/BitCrusher'
+import PingPongDelay from '../components/effects/PingPongDelay'
 
 export default class Synth extends React.Component {
   constructor(props) {
     super(props)
 
-    let autoFilter = new Tone.AutoFilter({
-      frequency: 1,
-      type: 'sine',
-      depth: 1,
-      baseFrequency: 200,
-      octaves: 2.6,
-      filter: {
-        type: 'lowpass',
-        rolloff: -12,
-        Q: 1
-      }
-    })
+    //let color_array = [
+    //  '#FF49D7',
+    //  '#7CFF5B',
+    //  '#006868',
+    //  '#FFE768',
+    //  '#FF7020',
+    //  '#B38FFF'
+    //]
 
-    let autoPanner = new Tone.AutoPanner({
-      frequency: 1,
-      type: 'sine',
-      depth: 1
-    })
+    //// Pick a random colour of the array
+    //let random_color =
+    //  color_array[Math.floor(Math.random() * color_array.length)]
 
-    let autoWah = new Tone.AutoWah({
-      baseFrequency: 0,
-      octaves: 0,
-      sensitivity: -40,
-      Q: 2,
-      gain: 2,
-      follower: {
-        attack: 0.3,
-        release: 0.5
-      }
-    })
+    //// Choose some jQuery CSS selectors of elements whose background colour you want to change
+    //let bg_colour_selectors = ['.Button.on', '.thumb', '.ToggleSwitch.on']
 
-    let bitCrusher = new Tone.BitCrusher({
-      bits: 0
-    })
-
-    let chebyshev = new Tone.Chebyshev({
-      order: 50,
-      oversample: 'none'
-    })
-
-    let chorus = new Tone.Chorus({
-      frequency: 1.5,
-      delayTime: 3.5,
-      depth: 0.7,
-      type: 'sine',
-      spread: 0
-    })
-
-    let convolver = new Tone.Convolver({
-      onload: Tone.noOp,
-      normalize: true
-    })
-
-    let distortion = new Tone.Distortion({
-      //distortion: 0.4,
-      //oversample: 'none'
-      distortion: 0,
-      oversample: '4x'
-    })
-
-    let feedbackDelay = new Tone.FeedbackDelay({
-      delayTime: '4n',
-      maxDelay: 0.8
-    })
-
-    let feedbackEffect = new Tone.FeedbackEffect({
-      feedback: 0.125
-    })
-
-    let freeverb = new Tone.Freeverb({
-      roomSize: 0.7,
-      dampening: 3000
-    })
-
-    let jcReverb = new Tone.JCReverb({
-      roomSize: 0.5
-    })
-
-    let phaser = new Tone.Phaser({
-      frequency: 0.5,
-      octaves: 3,
-      stages: 10,
-      Q: 10,
-      baseFrequency: 350
-    })
-
-    let pingPongDelay = new Tone.PingPongDelay({
-      delayTime: 0.25,
-      maxDelayTime: 1
-    })
-
-    let pitchShift = new Tone.PitchShift({
-      pitch: 0,
-      windowSize: 0.1,
-      delayTime: 0,
-      feedback: 0
-    })
-
-    let reverb = new Tone.Reverb({
-      //decay: 1.5,
-      decay: 0,
-      preDelay: 0.01
-    })
-
-    let stereoWidener = new Tone.StereoWidener({
-      width: 0.5
-    })
-
-    let tremolo = new Tone.Tremolo({
-      frequency: 10,
-      type: 'sine',
-      depth: 0.5,
-      spread: 0
-    })
-
-    let vibrato = new Tone.Vibrato({
-      maxDelay: 0.005,
-      frequency: 5,
-      depth: 0.1,
-      type: 'sine'
-    })
-
-    autoFilter.wet.value = 0
-    autoPanner.wet.value = 0
-    autoWah.wet.value = 0
-    bitCrusher.wet.value = 0
-    chebyshev.wet.value = 0
-    chorus.wet.value = 0
-    convolver.wet.value = 0
-    distortion.wet.value = 0
-    feedbackDelay.wet.value = 0
-    feedbackEffect.wet.value = 0
-    freeverb.wet.value = 0
-    jcReverb.wet.value = 0
-    phaser.wet.value = 0
-    pingPongDelay.wet.value = 0
-    pitchShift.wet.value = 0
-    reverb.wet.value = 0
-    stereoWidener.wet.value = 0
-    tremolo.wet.value = 0
-    vibrato.wet.value = 0
+    //jQuery.each(bg_colour_selectors, function(i, val) {
+    //  // use each val and apply the backgroun colour css property
+    //  $(val).css('background-color', random_color)
+    //})
 
     //synth
     let synth = new Tone.PolySynth()
 
-    let synth2 = new Tone.Synth()
-
-    //let synth1 = new Tone.Synth()
-    //let synth2 = new Tone.Synth()
-    //let synth3 = new Tone.Synth()
-    //let synth4 = new Tone.Synth()
+    //effects
+    let autoFilter = effects.autoFilter()
+    let chorus = effects.chorus()
+    let distortion = effects.distortion()
+    let feedbackDelay = effects.feedbackDelay()
+    let freeverb = effects.freeverb()
+    let phaser = effects.phaser()
+    let pingPongDelay = effects.pingPongDelay()
+    let autoPanner = effects.autoPanner()
+    let autoWah = effects.autoWah()
+    let bitCrusher = effects.bitCrusher()
+    let chebyshev = effects.chebyshev()
+    let feedbackEffect = effects.feedbackEffect()
+    let jcReverb = effects.jcReverb()
+    let pitchShift = effects.pitchShift()
+    let reverb = effects.reverb()
+    let stereoWidener = effects.stereoWidener()
+    let tremolo = effects.tremolo()
+    let vibrato = effects.vibrato()
 
     synth.chain(
       autoFilter,
@@ -178,7 +76,7 @@ export default class Synth extends React.Component {
       bitCrusher,
       chebyshev,
       chorus,
-      convolver,
+      //convolver, not defined
       distortion,
       feedbackDelay,
       feedbackEffect,
@@ -194,16 +92,7 @@ export default class Synth extends React.Component {
       Tone.Master
     )
 
-    synth2.chain(
-      reverb,
-      tremolo,
-      chorus,
-      distortion,
-      feedbackDelay,
-      Tone.Master
-    )
-
-    // loop
+    //loop
 
     let loop1 = new Tone.Loop(function(time) {
       synth.triggerAttackRelease('C2', '8n', time)
@@ -214,7 +103,7 @@ export default class Synth extends React.Component {
     }, '4n')
 
     let loop3 = new Tone.Loop(function(time) {
-      synth.triggerAttackRelease('E7', '8n', time)
+      synth.triggerAttackRelease('E2', '8n', time)
     }, '4n')
 
     let loop4 = new Tone.Loop(function(time) {
@@ -225,16 +114,86 @@ export default class Synth extends React.Component {
       synth.triggerAttackRelease('G2', '8n', time)
     }, '16n')
 
-    //let loop5 = new Tone.Loop(function(time) {
-    //  synth2.triggerAttackRelease('G2', '8n', time)
-    //}, '16n')
-
     let loop6 = new Tone.Pattern(
       function(time, note) {
-        synth.triggerAttackRelease('8n', time)
+        synth.triggerAttackRelease(note, '8n', time)
       },
-      ['C2', 'D4', 'E5', 'A6'],
-      'upDown'
+      ['C6', 'D4', 'E5', 'A6']
+    )
+
+    let loop7 = new Tone.Sequence(
+      function(time, note) {
+        synth.triggerAttackRelease(note, '1m', time)
+      },
+      [
+        'A9',
+        'A7',
+        'A5',
+        'E7',
+        'E5',
+        'E3',
+        'E3/5',
+        'E3',
+        'E3',
+        'E3/5',
+        'E3',
+        'E3',
+        'A9',
+        'A7',
+        'A5',
+        'E7',
+        'E5',
+        'E3',
+        'E3/5',
+        'E3',
+        'E3',
+        'A5',
+        'A2',
+        'A2',
+        'A9',
+        'A7',
+        'A7',
+        'A9',
+        'A7',
+        'A7',
+        'E5/7',
+        'E5',
+        'E5',
+        'E5/7',
+        'E5',
+        'E5'
+      ]
+      // ['C4', ['E4', 'D4', 'E4'], 'G4', ['A4', 'G4']]
+      //['C6']
+    )
+
+    let loop8 = new Tone.Sequence(
+      function(time, note) {
+        synth.triggerAttackRelease(note, '1m', time)
+      },
+      ['D4', 'G2', 'G4', 'D4', 'D3', 'D2', 'D0', 'A2', 'G4', 'G4']
+    )
+
+    let loop9 = new Tone.Sequence(
+      function(time, note) {
+        synth.triggerAttackRelease(note, '1m', time)
+      },
+      [
+        'E5',
+        'A7',
+        'D7',
+        'A7',
+        'E2',
+        'D4',
+        'E9',
+        'D11',
+        'A11',
+        'D11',
+        'E7',
+        'A9',
+        'D9',
+        'A9'
+      ]
     )
 
     this.state = {
@@ -270,11 +229,11 @@ export default class Synth extends React.Component {
         wet: 0,
         on: false
       },
-      convolver: {
-        effect: convolver,
-        wet: 0,
-        on: false
-      },
+      //convolver: {
+      //  effect: convolver,
+      //  wet: 0,
+      //  on: false
+      //},
       distortion: {
         effect: distortion,
         wet: 0,
@@ -366,19 +325,33 @@ export default class Synth extends React.Component {
       loop6: {
         loop: loop6,
         on: false
+      },
+      loop7: {
+        loop: loop7,
+        on: false
+      },
+      loop8: {
+        loop: loop8,
+        on: false
+      },
+      loop9: {
+        loop: loop9,
+        on: false
       }
     }
 
     _.bindAll(
       this,
-      'getRandomArbitrary',
-      'generateRandom',
+      //'getRandomArbitrary',
+      //'generateRandom',
       //'toggleSynth2',
       'toggleLoop',
       'toggleEffect',
       'changeEffectWetValue',
+      'changeEffectValue',
       'changeDistortionValue',
       'changeFeedbackDelayValue',
+      'changeFeedbackDelayValue2',
       'changeChorusValue',
       'changeAutoWahValue',
       'changeAutoWahValue2',
@@ -386,7 +359,11 @@ export default class Synth extends React.Component {
       'changeReverbValue',
       'changeReverbValue2',
       'changePhaserValue',
-      'changeBitCrusherValue'
+      'changePhaserValue2',
+      'changePhaserValue3',
+      'changePhaserValue4',
+      'changeBitCrusherValue',
+      'changePingPongDelayValue'
     )
 
     Tone.Transport.bpm.value = 115
@@ -394,37 +371,53 @@ export default class Synth extends React.Component {
   }
 
   componentDidMount() {
-    this.generateRandom()
+    let { effect, wet, on } = this.state.distortion
+
+    effect.wet.value = on == true ? this.props.wet : 0
+    effect.distortion = this.props.distortion
+    effect.oversample = this.props.oversample
+
+    this.setState({
+      distortion: {
+        effect,
+        wet: this.props.wet,
+        on: this.props.on
+      }
+    })
   }
 
-  getRandomArbitrary(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min
-  }
+  //componentDidMount() {
+  //  this.generateRandom()
+  //}
 
-  generateRandom() {
-    const { lastChange, timeout } = this.state
+  //getRandomArbitrary(min, max) {
+  //  return Math.floor(Math.random() * (max - min)) + min
+  //}
 
-    //console.log(
-    //  Date.now(),
-    //  lastChange,
-    //  Date.now() - lastChange,
-    //  timeout,
-    //  Date.now() - lastChange >= timeout
-    //)
+  //generateRandom() {
+  //  const { lastChange, timeout } = this.state
 
-    if (Date.now() - lastChange >= timeout) {
-      const random = this.getRandomArbitrary(100, 3000)
-      this.setState({
-        lastChange: Date.now(),
-        timeout: random
-      })
+  //  //console.log(
+  //  //  Date.now(),
+  //  //  lastChange,
+  //  //  Date.now() - lastChange,
+  //  //  timeout,
+  //  //  Date.now() - lastChange >= timeout
+  //  //)
 
-      this.changeDistortionValue('distortion', random / 30)
-      this.changeChorusValue('spread', random / 15)
-    }
+  //  if (Date.now() - lastChange >= timeout) {
+  //    const random = this.getRandomArbitrary(100, 3000)
+  //    this.setState({
+  //      lastChange: Date.now(),
+  //      timeout: random
+  //    })
 
-    setTimeout(() => this.generateRandom(), timeout)
-  }
+  //    this.changeDistortionValue('distortion', random / 30)
+  //    this.changeChorusValue('spread', random / 15)
+  //  }
+
+  //  setTimeout(() => this.generateRandom(), timeout)
+  //}
 
   //toggleSynth2() {
   //  let { instrument, on } = this.state.synth2
@@ -501,6 +494,25 @@ export default class Synth extends React.Component {
     })
   }
 
+  changeEffectValue(effectName, effectProperty, value) {
+    let { name, effect, wet, on } = this.state[effectName]
+
+    if (effectProperty == 'order') {
+      value = Math.round(value)
+    }
+
+    effect[effectProperty] = value
+
+    this.setState({
+      [`${effectName}`]: {
+        name,
+        effect,
+        wet,
+        on
+      }
+    })
+  }
+
   changeDistortionValue(effectName, value) {
     let { effect, wet, on } = this.state.distortion
 
@@ -557,9 +569,52 @@ export default class Synth extends React.Component {
     })
   }
 
+  changePhaserValue2(effectName, value) {
+    let { effect, wet, on } = this.state.phaser
+
+    effect.octaves = value
+
+    this.setState({
+      phaser: {
+        effect,
+        wet,
+        on
+      }
+    })
+  }
+
+  changePhaserValue3(effectName, value) {
+    let { effect, wet, on } = this.state.phaser
+
+    effect.frequency.value = value
+
+    this.setState({
+      phaser: {
+        effect,
+        wet,
+        on
+      }
+    })
+  }
+
+  changePhaserValue4(effectName, value) {
+    let { effect, wet, on } = this.state.phaser
+
+    effect.baseFrequency = value
+
+    this.setState({
+      phaser: {
+        effect,
+        wet,
+        on
+      }
+    })
+  }
+
   changeBitCrusherValue(effectName, value) {
     let { effect, wet, on } = this.state.bitCrusher
 
+    //effect.bits.value = value
     effect.bits = value
 
     this.setState({
@@ -575,6 +630,20 @@ export default class Synth extends React.Component {
     let { effect, wet, on } = this.state.feedbackDelay
 
     effect.maxDelay = value
+
+    this.setState({
+      feedbackDelay: {
+        effect,
+        wet,
+        on
+      }
+    })
+  }
+
+  changeFeedbackDelayValue2(effectName, value) {
+    let { effect, wet, on } = this.state.feedbackDelay
+
+    effect.delayTime.value = value
 
     this.setState({
       feedbackDelay: {
@@ -641,6 +710,20 @@ export default class Synth extends React.Component {
     })
   }
 
+  changePingPongDelayValue(effectName, value) {
+    let { effect, wet, on } = this.state.pingPongDelay
+
+    effect.delayTime.value = value
+
+    this.setState({
+      pingPongDelay: {
+        effect,
+        wet,
+        on
+      }
+    })
+  }
+
   render() {
     let {
       distortion,
@@ -651,6 +734,7 @@ export default class Synth extends React.Component {
       reverb,
       tremolo,
       phaser,
+      pingPongDelay,
       synth,
       synth2,
       loop1,
@@ -658,7 +742,10 @@ export default class Synth extends React.Component {
       loop3,
       loop4,
       loop5,
-      loop6
+      loop6,
+      loop7,
+      loop8,
+      loop9
     } = this.state
     let { toggleEffect } = this
 
@@ -666,161 +753,134 @@ export default class Synth extends React.Component {
       <div>
         <div className="sectionLoops">
           <div className="itemLoop">
-            <div className="headerLoop">Loop 1</div>
-            <PlaySwitch
-              name="play"
-              value={loop1.on}
-              handleToggleClick={() => this.toggleLoop('loop1')}
+            <ToggleLoop
+              value="loop 1"
+              current={loop1.on}
+              handleClick={() => this.toggleLoop('loop1')}
             />
           </div>
           <div className="itemLoop">
-            <div className="headerLoop">Loop 2</div>
-            <PlaySwitch
-              name="play"
-              value={loop2.on}
-              handleToggleClick={() => this.toggleLoop('loop2')}
+            <ToggleLoop
+              value="loop 2"
+              current={loop2.on}
+              handleClick={() => this.toggleLoop('loop2')}
+            />
+          </div>
+          <div className="itemLoop" id="ocean">
+            <ToggleLoop
+              value="loop 3"
+              current={loop3.on}
+              handleClick={() => this.toggleLoop('loop3')}
             />
           </div>
           <div className="itemLoop">
-            <div className="headerLoop">Loop 3</div>
-            <PlaySwitch
-              name="play"
-              value={loop3.on}
-              handleToggleClick={() => this.toggleLoop('loop3')}
+            <ToggleLoop
+              value="loop 4"
+              current={loop4.on}
+              handleClick={() => this.toggleLoop('loop4')}
             />
           </div>
           <div className="itemLoop">
-            <div className="headerLoop">Loop 4</div>
-            <PlaySwitch
-              name="play"
-              value={loop4.on}
-              handleToggleClick={() => this.toggleLoop('loop4')}
+            <ToggleLoop
+              value="loop 5"
+              current={loop5.on}
+              handleClick={() => this.toggleLoop('loop5')}
+            />
+          </div>
+          <div className="itemLoop" id="ocean">
+            <ToggleLoop
+              value="loop 6"
+              current={loop6.on}
+              handleClick={() => this.toggleLoop('loop6')}
             />
           </div>
           <div className="itemLoop">
-            <div className="headerLoop">Loop 5</div>
-            <PlaySwitch
-              name="play"
-              value={loop5.on}
-              handleToggleClick={() => this.toggleLoop('loop5')}
+            <ToggleLoop
+              value="loop 7"
+              current={loop7.on}
+              handleClick={() => this.toggleLoop('loop7')}
             />
           </div>
           <div className="itemLoop">
-            <div className="headerLoop">Pattern</div>
-            <PlaySwitch
-              name="play"
-              value={loop6.on}
-              handleToggleClick={() => this.toggleLoop('loop6')}
+            <ToggleLoop
+              value="loop 8"
+              current={loop8.on}
+              handleClick={() => this.toggleLoop('loop8')}
+            />
+          </div>
+          <div className="itemLoop">
+            <ToggleLoop
+              value="loop 9"
+              current={loop9.on}
+              handleClick={() => this.toggleLoop('loop9')}
             />
           </div>
         </div>
-        <Distortion
-          {...this.state.distortion}
-          toggleEffect={() => toggleEffect('distortion')}
-          changeEffectWetValue={this.changeEffectWetValue}
-          changeDistortionValue={this.changeDistortionValue}
-        />
-        <Chorus
-          {...this.state.chorus}
-          toggleEffect={() => toggleEffect('chorus')}
-          changeEffectWetValue={this.changeEffectWetValue}
-          changeChorusValue={this.changeChorusValue}
-        />
-        <FeedbackDelay
-          {...this.state.feedbackDelay}
-          toggleEffect={() => toggleEffect('feedbackDelay')}
-          changeEffectWetValue={this.changeEffectWetValue}
-          changeFeedbackDelayValue={this.changeFeedbackDelayValue}
-        />
-        <Tremolo
-          {...this.state.tremolo}
-          toggleEffect={() => toggleEffect('tremolo')}
-          changeEffectWetValue={this.changeEffectWetValue}
-          changeTremoloValue={this.changeTremoloValue}
-        />
-        <Reverb
-          {...this.state.reverb}
-          toggleEffect={() => toggleEffect('reverb')}
-          changeEffectWetValue={this.changeEffectWetValue}
-          changeReverbValue={this.changeReverbValue}
-          changeReverbValue2={this.changeReverbValue2}
-        />
-        Change AutoWah Wet Value
-        <Slider
-          name="autoWah"
-          min="0"
-          max="1"
-          value={autoWah.effect.wet.value}
-          handleValueChange={this.changeEffectWetValue}
-        />
-        Change Phaser Wet Value
-        <Slider
-          name="phaser"
-          min="0"
-          max="1"
-          value={phaser.effect.wet.value}
-          handleValueChange={this.changeEffectWetValue}
-        />
-        Change BitCrusher Wet Value
-        <Slider
-          name="bitCrusher"
-          min="0"
-          max="1"
-          value={bitCrusher.effect.wet.value}
-          handleValueChange={this.changeEffectWetValue}
-        />
-        AutoWah Octaves
-        <Slider
-          name="autoWah"
-          min="0"
-          max="20"
-          value={autoWah.effect.octaves}
-          handleValueChange={this.changeAutoWahValue}
-        />
-        AutoWah baseFrequency
-        <Slider
-          name="autoWah"
-          min="0"
-          max="10"
-          value={autoWah.effect.baseFrequency}
-          handleValueChange={this.changeAutoWahValue2}
-        />
-        Phaser Stages
-        <Slider
-          name="phaser"
-          min="0"
-          max="50"
-          value={phaser.effect.stages}
-          handleValueChange={this.changePhaserValue}
-        />
-        BitCrusher Bits
-        <Slider
-          name="bitCrusher"
-          min="0"
-          max="6"
-          value={bitCrusher.effect.bits}
-          handleValueChange={this.changeBitCrusherValue}
-        />
-        Knob AutoWah ?
-        <Knob min="-40" max="0" handleValueChange={this.changeAutoWahValue} />
-        Toggle AutoWah
-        <ToggleSwitch
-          value="AutoWah"
-          current={autoWah.on}
-          handleClick={() => toggleEffect('autoWah')}
-        />
-        Toggle Phaser
-        <ToggleSwitch
-          value="Phaser"
-          current={phaser.on}
-          handleClick={() => toggleEffect('phaser')}
-        />
-        Toggle BitCrusher
-        <ToggleSwitch
-          value="Bit Crusher"
-          current={bitCrusher.on}
-          handleClick={() => toggleEffect('bitCrusher')}
-        />
+        <div className="panelEffects">
+          <Distortion
+            {...this.state.distortion}
+            toggleEffect={() => toggleEffect('distortion')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeDistortionValue={this.changeDistortionValue}
+            changeEffectValue={this.changeEffectValue}
+          />
+          <Chorus
+            {...this.state.chorus}
+            toggleEffect={() => toggleEffect('chorus')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeChorusValue={this.changeChorusValue}
+            changeEffectValue={this.changeEffectValue}
+          />
+          <Tremolo
+            {...this.state.tremolo}
+            toggleEffect={() => toggleEffect('tremolo')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeTremoloValue={this.changeTremoloValue}
+            changeEffectValue={this.changeEffectValue}
+          />
+          <FeedbackDelay
+            {...this.state.feedbackDelay}
+            toggleEffect={() => toggleEffect('feedbackDelay')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeFeedbackDelayValue={this.changeFeedbackDelayValue}
+            changeFeedbackDelayValue2={this.changeFeedbackDelayValue2}
+          />
+          <Reverb
+            {...this.state.reverb}
+            toggleEffect={() => toggleEffect('reverb')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeReverbValue={this.changeReverbValue}
+            changeReverbValue2={this.changeReverbValue2}
+          />
+          <AutoWah
+            {...this.state.autoWah}
+            toggleEffect={() => toggleEffect('autoWah')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeAutoWahValue={this.changeAutoWahValue}
+            changeAutoWahValue2={this.changeAutoWahValue2}
+          />
+          <Phaser
+            {...this.state.phaser}
+            toggleEffect={() => toggleEffect('phaser')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changePhaserValue={this.changePhaserValue}
+            changePhaserValue2={this.changePhaserValue2}
+            changePhaserValue3={this.changePhaserValue3}
+            changePhaserValue4={this.changePhaserValue4}
+          />
+          <BitCrusher
+            {...this.state.bitCrusher}
+            toggleEffect={() => toggleEffect('bitCrusher')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changeBitCrusherValue={this.changeBitCrusherValue}
+          />
+          <PingPongDelay
+            {...this.state.pingPongDelay}
+            toggleEffect={() => toggleEffect('pingPongDelay')}
+            changeEffectWetValue={this.changeEffectWetValue}
+            changePingPongDelayValue={this.changePingPongDelayValue}
+          />
+        </div>
       </div>
     )
   }

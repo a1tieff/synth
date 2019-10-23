@@ -4,25 +4,21 @@ import PlaySwitch from '../PlaySwitch'
 import ToggleSwitch from '../ToggleSwitch'
 import Slider from '../Slider'
 import Knob from '../Knob'
-import ButtonSet from '../ButtonSet'
 
-export default class Distortion extends React.Component {
+export default class PingPongDelay extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const set = ['none', '2x', '4x']
-
-    let name = 'distortion'
+    let name = 'pingPongDelay'
     const {
       effect,
       wet,
       on,
       toggleEffect,
       changeEffectWetValue,
-      changeDistortionValue,
-      changeEffectValue
+      changePingPongDelayValue
     } = this.props
 
     return (
@@ -38,27 +34,17 @@ export default class Distortion extends React.Component {
           />
         </div>
         <div className="paramEffect">
-          <div className="paramName">Distortion</div>
+          <div className="paramName">Delay Time</div>
           <Slider
             name={name}
             min="0"
-            max="100"
-            value={effect.distortion}
-            handleValueChange={changeDistortionValue}
-          />
-        </div>
-        <div className="paramEffect">
-          <div className="paramName">Oversample</div>
-          <ButtonSet
-            name={name}
-            property="oversample"
-            set={set}
-            value={effect.oversample}
-            handleValueChange={changeEffectValue}
+            max="50"
+            value={effect.delayTime}
+            handleValueChange={changePingPongDelayValue}
           />
         </div>
         <ToggleSwitch
-          value="Distortion"
+          value="Ping-Pong Delay"
           current={on}
           handleClick={toggleEffect}
         />

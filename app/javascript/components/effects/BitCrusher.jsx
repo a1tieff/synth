@@ -3,26 +3,21 @@ import React from 'react'
 import PlaySwitch from '../PlaySwitch'
 import ToggleSwitch from '../ToggleSwitch'
 import Slider from '../Slider'
-import Knob from '../Knob'
-import ButtonSet from '../ButtonSet'
 
-export default class Distortion extends React.Component {
+export default class BitCrusher extends React.Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const set = ['none', '2x', '4x']
-
-    let name = 'distortion'
+    let name = 'bitCrusher'
     const {
       effect,
       wet,
       on,
       toggleEffect,
       changeEffectWetValue,
-      changeDistortionValue,
-      changeEffectValue
+      changeBitCrusherValue
     } = this.props
 
     return (
@@ -38,27 +33,17 @@ export default class Distortion extends React.Component {
           />
         </div>
         <div className="paramEffect">
-          <div className="paramName">Distortion</div>
+          <div className="paramName">Bits</div>
           <Slider
             name={name}
             min="0"
-            max="100"
-            value={effect.distortion}
-            handleValueChange={changeDistortionValue}
-          />
-        </div>
-        <div className="paramEffect">
-          <div className="paramName">Oversample</div>
-          <ButtonSet
-            name={name}
-            property="oversample"
-            set={set}
-            value={effect.oversample}
-            handleValueChange={changeEffectValue}
+            max="32"
+            value={effect.bitCrusher}
+            handleValueChange={changeBitCrusherValue}
           />
         </div>
         <ToggleSwitch
-          value="Distortion"
+          value="BitCrusher"
           current={on}
           handleClick={toggleEffect}
         />

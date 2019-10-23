@@ -30,8 +30,20 @@ export default class Slider extends React.Component {
     )
   }
 
+  //colorizeThumb() {
+  //  let idArray = ['orange', 'yellow', 'acid', 'lilac', 'blue', 'ocean', 'pink']
+
+  //  let randomId = idArray[Math.floor(Math.random() * idArray.length)]
+
+  //  getElementsByClassName('thumb').setAttribute('id', randomId)
+  //  console.log('id is here')
+  //}
+
   componentDidMount() {
+    const { value } = this.props
     const { x, width } = this.slideArea.current.getBoundingClientRect()
+    let idArray = ['ocean', 'pink', 'lilac', 'acid']
+    let randomId = idArray[Math.floor(Math.random() * idArray.length)]
 
     this.setState({
       area: {
@@ -40,8 +52,9 @@ export default class Slider extends React.Component {
         width: width
       },
       thumb: {
-        left: this.calculateLeft(width)
-      }
+        left: this.calculateLeft(width, value)
+      },
+      id: randomId
     })
 
     document.addEventListener('mouseup', this.handleMouseUp)
@@ -49,9 +62,10 @@ export default class Slider extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { width } = this.state.area
+    //const { width } = this.state.area
+    const { x, width } = this.slideArea.current.getBoundingClientRect()
     if (nextProps.value != this.props.value) {
-      nextState.thumb.left = this.calculateLeft(width)
+      nextState.thumb.left = this.calculateLeft(width, nextProps.value)
     }
 
     return true
@@ -128,7 +142,8 @@ export default class Slider extends React.Component {
   }
 
   render() {
-    const { left } = this.state.thumb
+    const { id, thumb } = this.state
+    const { left } = thumb
 
     const style = {
       transform: `translateX(${left}px)`
@@ -143,6 +158,7 @@ export default class Slider extends React.Component {
       >
         <div
           className="thumb"
+          id={id}
           style={style}
           onMouseDown={this.handleMouseDown}
         />

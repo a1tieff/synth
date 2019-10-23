@@ -24,31 +24,36 @@ export default class Reverb extends React.Component {
 
     return (
       <div className="Effect">
-        <h1 className="headerEffect">Reverb</h1>
-        <div className="paramEffect">Wet</div>
-        <Slider
-          name={name}
-          min="0"
-          max="1"
-          value={wet}
-          handleValueChange={changeEffectWetValue}
-        />
-        <div className="paramEffect">Decay</div>
-        <Slider
-          name={name}
-          min="0"
-          max="10"
-          value={effect.decay}
-          handleValueChange={changeReverbValue}
-        />
-        <div className="paramEffect">pre Delay</div>
-        <Slider
-          name={name}
-          min="0"
-          max="20"
-          value={effect.preDelay}
-          handleValueChange={changeReverbValue2}
-        />
+        <div className="paramEffect">
+          <div className="paramName">Wet</div>
+          <Slider
+            name={name}
+            min="0"
+            max="1"
+            value={wet}
+            handleValueChange={changeEffectWetValue}
+          />
+        </div>
+        <div className="paramEffect">
+          <div className="paramName">Decay</div>
+          <Slider
+            name={name}
+            min="0"
+            max="1.5"
+            value={effect.decay}
+            handleValueChange={changeReverbValue}
+          />
+        </div>
+        <div className="paramEffect">
+          <div className="paramName">pre Delay</div>
+          <Slider
+            name={name}
+            min="0"
+            max="0.01"
+            value={effect.preDelay}
+            handleValueChange={changeReverbValue2}
+          />
+        </div>
         <ToggleSwitch value="Reverb" current={on} handleClick={toggleEffect} />
       </div>
     )

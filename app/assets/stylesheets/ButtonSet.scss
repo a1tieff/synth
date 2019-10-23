@@ -1,0 +1,11 @@
+.ButtonSet {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 15px;
+
+  :last-child {
+    margin-right: 0px;
+  }
+}

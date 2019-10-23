@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import classnames from 'classnames'
 
-export default class ToggleSwitch extends React.Component {
+export default class ToggleLoop extends React.Component {
   constructor(props) {
     super(props)
 
@@ -14,22 +14,11 @@ export default class ToggleSwitch extends React.Component {
     this.props.handleClick(value)
   }
 
-  //componentDidMount() {
-  //  let idArray = ['orange', 'acid', 'lilac', 'blue', 'pink']
-  //  let randomId = idArray[Math.floor(Math.random() * idArray.length)]
-
-  //  this.setState({
-  //    id: randomId
-  //  })
-  //}
-
   render() {
     const { current, value } = this.props
-    //let idArray = ['orange', 'yellow', 'acid', 'lilac', 'blue', 'pink']
-    //let randomId = idArray[Math.floor(Math.random() * idArray.length)]
 
     const classes = classnames({
-      ToggleSwitch: true,
+      ToggleLoop: true,
       on: current,
       [`${value}`]: true
     })

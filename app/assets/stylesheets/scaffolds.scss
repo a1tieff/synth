@@ -1,18 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap');
+
 body {
-  background-color: white;
+  background-color: black;
   //color: #e0e0e0;
-  color: black;
-  margin: 40px 120px 0px 120px;
+  color: white;
+  margin: 40px 95px 40px 95px;
+  //font-family: 'IBM Plex Mono', helvetica, sans-serif;
   font-family: 'helvetica neue', helvetica, sans-serif;
+  letter-spacing: 0.5pt;
   font-size: 13px;
   line-height: 18px;
+  overflow-x: hidden;
 }
 
 p,
 ol,
 ul,
 td {
-  font-family: 'helvetica neue', helvetica, sans-serif;
+  font-family: 'IBM Plex Mono', helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
 }

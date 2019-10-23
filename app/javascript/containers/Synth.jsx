@@ -23,27 +23,6 @@ export default class Synth extends React.Component {
   constructor(props) {
     super(props)
 
-    //let color_array = [
-    //  '#FF49D7',
-    //  '#7CFF5B',
-    //  '#006868',
-    //  '#FFE768',
-    //  '#FF7020',
-    //  '#B38FFF'
-    //]
-
-    //// Pick a random colour of the array
-    //let random_color =
-    //  color_array[Math.floor(Math.random() * color_array.length)]
-
-    //// Choose some jQuery CSS selectors of elements whose background colour you want to change
-    //let bg_colour_selectors = ['.Button.on', '.thumb', '.ToggleSwitch.on']
-
-    //jQuery.each(bg_colour_selectors, function(i, val) {
-    //  // use each val and apply the backgroun colour css property
-    //  $(val).css('background-color', random_color)
-    //})
-
     //synth
     let synth = new Tone.PolySynth()
 

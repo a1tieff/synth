@@ -43,7 +43,7 @@ export default class BitCrusher extends React.Component {
           />
         </div>
         <ToggleSwitch
-          value="BitCrusher"
+          value="Bit Crusher"
           current={on}
           handleClick={toggleEffect}
         />

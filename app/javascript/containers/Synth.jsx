@@ -4,8 +4,6 @@ import React from 'react'
 import Tone from 'tone'
 
 import * as effects from '../tunes/effects'
-//import * as parts from '../tunes/parts'
-//import * as synths from '../tunes/synths'
 
 import PlaySwitch from '../components/PlaySwitch'
 import ToggleSwitch from '../components/ToggleSwitch'
@@ -123,7 +121,7 @@ export default class Synth extends React.Component {
 
     let loop7 = new Tone.Sequence(
       function(time, note) {
-        synth.triggerAttackRelease(note, '1m', time)
+        synth.triggerAttackRelease(note, '8n', time)
       },
       [
         'A9',
@@ -183,13 +181,13 @@ export default class Synth extends React.Component {
         'A7',
         'D7',
         'A7',
-        'E2',
+        'G2',
         'D4',
-        'E9',
+        'G9',
         'D11',
         'A11',
         'D11',
-        'E7',
+        'G7',
         'A9',
         'D9',
         'A9'
@@ -366,7 +364,7 @@ export default class Synth extends React.Component {
       'changePingPongDelayValue'
     )
 
-    Tone.Transport.bpm.value = 115
+    Tone.Transport.bpm.value = 80
     Tone.Transport.start()
   }
 
@@ -477,6 +475,12 @@ export default class Synth extends React.Component {
       }
     })
   }
+
+  //changeBpmValue() {
+  //  let { name, value } = this.props.Tone.Transport.bpm.value
+
+  //  this.setState({ value })
+  //}
 
   changeEffectWetValue(effectName, value) {
     let { effect, wet, on } = this.state[effectName]
@@ -614,7 +618,6 @@ export default class Synth extends React.Component {
   changeBitCrusherValue(effectName, value) {
     let { effect, wet, on } = this.state.bitCrusher
 
-    //effect.bits.value = value
     effect.bits = value
 
     this.setState({
@@ -789,28 +792,28 @@ export default class Synth extends React.Component {
           </div>
           <div className="itemLoop" id="ocean">
             <ToggleLoop
-              value="loop 6"
+              value="pattern"
               current={loop6.on}
               handleClick={() => this.toggleLoop('loop6')}
             />
           </div>
           <div className="itemLoop">
             <ToggleLoop
-              value="loop 7"
+              value="n-mc"
               current={loop7.on}
               handleClick={() => this.toggleLoop('loop7')}
             />
           </div>
           <div className="itemLoop">
             <ToggleLoop
-              value="loop 8"
+              value="n-cm"
               current={loop8.on}
               handleClick={() => this.toggleLoop('loop8')}
             />
           </div>
           <div className="itemLoop">
             <ToggleLoop
-              value="loop 9"
+              value="n-m"
               current={loop9.on}
               handleClick={() => this.toggleLoop('loop9')}
             />

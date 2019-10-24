@@ -778,21 +778,21 @@ export default class Synth extends React.Component {
           </div>
           <div className="itemLoop">
             <ToggleLoop
-              value="n-mc"
+              value="ns-1(mk)"
               current={loop7.on}
               handleClick={() => this.toggleLoop('loop7')}
             />
           </div>
           <div className="itemLoop">
             <ToggleLoop
-              value="n-cm"
+              value="ns2-2(cm)"
               current={loop8.on}
               handleClick={() => this.toggleLoop('loop8')}
             />
           </div>
           <div className="itemLoop">
             <ToggleLoop
-              value="n-m"
+              value="ns-3(m)"
               current={loop9.on}
               handleClick={() => this.toggleLoop('loop9')}
             />
